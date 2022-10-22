@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+ 
+  <ItemGroup>
+    <PackageReference Include="DiscordRichPresence" Version="1.0.175" />
+    <PackageReference Include="ElectronNET.API" Version="13.5.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.9" />
+    <PackageReference Include="LiteDB" Version="5.0.12" />
+    <PackageReference Include="ObsStrawket" Version="0.3.0-alpha" />
+	  <ProjectReference Include="..\..\TrovoCore\TrovoCore\TrovoCore.csproj" />
+    <Content Update="electron.manifest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Reference Include="RequestHandler">
+      <HintPath>..\..\RequestHandler.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Icons\Logo.png" />
+    <None Include="wwwroot\Icons\logo_small.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\alerts\images\" />
+    <Folder Include="wwwroot\alerts\sounds\" />
+  </ItemGroup>
+
+
+
+</Project>

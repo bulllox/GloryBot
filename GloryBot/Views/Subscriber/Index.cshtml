@@ -1,0 +1,55 @@
+@{
+    ViewData["title"] = "Subscriber";
+
+    var Subscriptions = (List<Subscription>)ViewData["subscriptions"];
+    var SubClass = "cnorm";
+
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="~/css/subs.css" asp-append-version="true">
+
+<head>
+    <style>
+    </style>
+</head>
+
+<body>
+    <table border="0" cellpadding="4" cellspacing="0" width="95%" align="center">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Sub seit</th>
+                <th>Sub Tier</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Subscriptions != null && Subscriptions.Count > 0)
+            {
+
+                @foreach (var subscription in Subscriptions)
+                {
+                    
+                    SubClass =  (SubClass == "cnorm") ? "cdark" : "cnorm"; 
+                    
+                    <tr class="@SubClass">
+                        
+                        <td>@subscription.user.display_name</td>
+                        <td>@subscription.sub_created_at</td>
+                        <td>@subscription.sub_tier</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr class="@SubClass">
+                    <td colspan="3" align="center" style="color:white;">No Subs</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+
+</html>

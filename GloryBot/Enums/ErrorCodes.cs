@@ -1,0 +1,36 @@
+namespace GloryBot.Enums;
+public enum ErrorCodes
+{
+    ProfileFetchFailed = -10500,
+    ServerFetchDataFailed = -1201,
+    ServiceTimeOut = -1000,
+    InvalidParams = 1002,
+    InternalServerError = 1111,
+    Conflict = 1203,
+    InvalidUser = 10505,
+    AuthorizationFailed = 10703,
+    AuthorizeCodeExpired = 10710,
+    DontSpan = 10908,
+    InvalidCategory = 11000,
+    ContentConflict = 11101,
+    AccountBlocked = 11400,
+    IpBlocked = 11402,
+    InvalidHeader = 11701,
+    InvalidScope = 117003,
+    InvalidAccessToken = 11704,
+    ApiRateExceeded = 11706,
+    ChannelSendNoPermission = 11707,
+    InvalidShardValue = 11708,
+    NoShardingTokenPermission = 11709,
+    AuthorizeTokenUsed = 11711,
+    RefreshTokenExpired = 11712,
+    InvalidRefreshToken = 11713,
+    AccessTokenExpired = 11714,
+    InvalidGrantType = 11715,
+    InvalidUrl = 11716,
+    InvalidClientSecred = 11717,
+    ScopeNotAuthorized = 11730,
+    AccessTokenNumLimit = 11718,
+    UserIsBannedFromChattingToChannel = 12400
+
+}

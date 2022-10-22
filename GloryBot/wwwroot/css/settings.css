@@ -1,0 +1,71 @@
+@import url('./root.css');
+
+
+.channel {
+    width: 400px !important;
+}
+
+.groupBoxTitle {
+    width: 60% !important;
+}
+
+.groupBoxContent {
+    position: relative;
+}
+
+.btn-green {
+    position: absolute;
+    width: 90px;
+    height: 35px;
+    right: 20px;
+    border-radius: 10px;
+    border: 1px solid rgb(10, 94, 49);
+    font-size: 17px;
+    font-weight: bold;
+}
+
+select {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    background-color: rgb(36, 36, 36) !important;
+    border: 1px solid rgb(20, 20, 20) !important;
+    color: white !important;
+    border-radius: 5px;
+    z-index: 100;
+}
+
+.settingsCenter {
+    width: 100% !important;
+    gap: 20%;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%,-40%);
+}
+
+.settingsTop {
+    width: 100% !important;
+    gap: 20%;
+}
+
+.settingsBottom {
+    position: absolute;
+    width: 100% !important;
+    gap: 20%;
+    bottom: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+input[type="text"], input[type="file"] {
+    background-color: rgb(36, 36, 36) !important;
+    border: 1px solid rgb(20, 20, 20) !important;
+    color: white !important;
+}
+
+label {
+    background-color: rgb(26, 26, 26) !important;
+    border: 1px solid rgb(20, 20, 20) !important;
+    color: white !important;
+}

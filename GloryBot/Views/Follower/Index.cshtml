@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "Follower";
+    var Followers = (FollowerModel)ViewData["follower"];
+    var FClass = "cnorm";
+}
+@using GloryBot.Models
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <link rel="stylesheet" href="~/css/follower.css" asp-append-version="true">
+
+</head>
+
+<body>
+    <table id="followerTable" class="display" style="width: 97% !important;">
+        <thead>
+            <tr>
+                <th>Icon</th>
+                <th>Username</th>
+                <th>Followed at</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @if (Followers != null && Followers.follower.Count > 0)
+            {
+                @foreach (var follower in Followers.follower)
+                {
+                    FClass = (FClass == "cnorm") ? "cdark" : "cnorm";
+                    <tr class="@FClass">
+                        <td><img height="32" width="32" src="@follower.profile_pic"></td>
+                        <td>@follower.nickname</td>
+                        <td>@follower.followed_at</td>
+                    </tr>
+                }
+            }
+            else
+            {
+            <td colspan="3">No Follower</td>
+            }
+        </tbody>
+    </table>
+</body>
+
+</html>
+
+@section Scripts {
+    <script>
+        var lang = '@DashboardInstance.SettingsModel.Lang';
+        $(`#followerTable`).DataTable({
+            language: {
+                url: `/DataTables/${lang}.json`
+            }
+        });
+    </script>
+}

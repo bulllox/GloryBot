@@ -1,0 +1,123 @@
+@using GloryBot.Models.SaveModels
+@using GloryBot.Models
+@model             GloryBot.Models.SaveModels.TempSettingsModel
+@{
+    ViewData["Title"] = Translate("settings.title");
+    bool obsactivated = true;
+    Layout = "_Layout";
+    ViewData["controller"] = "Settings";
+}  
+
+<html>
+
+<head>
+    <link rel="stylesheet" href="~/css/settings.css" asp-append-version="true">
+    
+</head>
+
+<body>    
+    <div class="container d-flex align-self-center settingsTop">
+
+        <div class="groupBox" style="width: 400px !important;">
+            <div class="groupBoxTitle">Auth</div>
+            <div class="groupBoxContent">
+                <li style="margin-bottom:50px;" class="input-group">
+                    <label class="input-group-text">Streamer</label>
+                    @if (Trovo.IsNotExpired("Streamer"))
+                    {
+                        <label class="input-group-text" style="color:green !important;">Authorized</label>
+                        <button id="btnStreamerAuth"class="btn-green" disabled>Auth</button>
+                    } else {
+                        <label class="input-group-text" style="color:red !important;">Not Authorized</label>
+                        @using (Html.BeginForm("StreamerAuth", "Settings", FormMethod.Post))
+                        {
+                            <button id="btnStreamerAuth" class="btn-green">Auth</button>
+                        }
+                    }
+                    
+                </li>
+                <li class="input-group">
+                    <label class="input-group-text" style="width:89px;">Bot</label>
+                    @if (Trovo.IsNotExpired("Bot"))
+                    {
+                        <label class="input-group-text" style="color:green !important;">Authorized</label>
+
+                        <button id="btnBotAuth" class="btn-green" disabled>Auth</button>
+                    } else {
+                        <label class="input-group-text" style="color:red !important;">Not Authorized</label>
+                        @using(Html.BeginForm("BotAuth", "Settings", FormMethod.Post)) {
+                            <button id="btnBotAuth" class="btn-green">Auth</button>
+                        }
+                    }
+
+                </li>
+            </div>
+        </div>
+        @using (Html.BeginForm("SaveChannel", "Settings", FormMethod.Post)) {
+            <div class="groupBox" style="width: 400px !important;">
+                <div class="groupBoxTitle">Channel</div>
+                <div class="groupBoxContent">
+                    <li class="input-group">
+                        <label class="input-group-text">Channel Name</label>
+                        <input type="text" id="channelName" asp-for="ChannelName" class="form-control" value="@DashboardInstance.SettingsModel.Channel">
+                    </li>
+                    @*<li><button class="btn-green" id="btnChannelSave" style="bottom: -90%;">Save</button></li>*@
+
+                    <li style="margin-bottom: 20px;"><input type="submit" class="btn-green" value="@Translate("Save", "Save")" /></li>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="container d-flex align-self-center settingsCenter">
+        <div class="groupBox" style="width: 400px !important;">
+            <div class="groupBoxTitle">Language</div>
+            <div class="groupBoxContent">
+                <select id="languageSelector">
+                    <option></option>@Html.Raw(@ViewData["Options"])
+                </select>
+                <fieldset style="margin-top: 15px;">
+                    <legend>@Translate("notice", "Notice")</legend>
+                    @Translate("noticeText")
+                </fieldset>
+            </div>
+        </div>
+        @using(Html.BeginForm("SaveDiscord", "Settings", FormMethod.Post)) {
+            <div class="groupBox" style="width: 400px !important;">
+                <div class="groupBoxTitle">Discord</div>
+                <div class="groupBoxContent" >
+                    <div class="input-group" style="margin-bottom:20px;"> 
+                        <div class="input-group mb-2">
+                            <label class="input-group-text" style="width:112px;">Client ID</label>
+                            <input type="text" id="discordClientID" asp-for="DiscordClientID" value="@DashboardInstance.SettingsModel.DiscordClientId" />
+                        </div>
+                        <div class="input-group mb-2">
+                            <label class="input-group-text">Large Image</label>
+                            <input type="text" id="discordLargeImage" asp-for="DiscordLargeImage" value="@DashboardInstance.SettingsModel.DiscordLargeImage" />
+                        </div>
+                        <div class="input-group mb-2">
+                            <label class="input-group-text">Small Image</label>
+                            <input type="text" id="discordSmallImage" asp-for="DiscordSmallImage" value="@DashboardInstance.SettingsModel.DiscordSmallImage" />
+                        </div>
+                        <div class="input-group mb-2">
+                            
+                            <input type="submit" class="btn-green" value="@Translate("Save", "Save")">
+                           @*<button class="btn-green" id="btnSaveDiscord">@Translate("Save", "Save")</button>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</body>
+
+</html>
+
+@section Scripts {
+    <script src="~/js/settings.js" asp-append-version="true"></script>
+        <script>
+            $(document).ready(function () {
+                $('.dropdown-toggle').dropdown()
+            });
+    </script>
+}

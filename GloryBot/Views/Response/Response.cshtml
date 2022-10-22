@@ -1,0 +1,25 @@
+<style>
+    .content {
+        position: relative;
+    }
+
+    .groupBox {
+        position: absolute;
+        top: 10%;
+        left: 50%;
+        width: 800px !important;
+        transform: translate(-50%,-10%);
+    }
+
+    .groupBoxTitle {
+        width: 65% !important;
+    }
+</style>
+<div class="groupBox">
+    <div class="groupBoxTitle">
+        @Translate("response.title")
+    </div>
+    <div class="groupBoxContent">
+        @Translate("response.content", "Successfully Authorized");
+    </div>
+</div>

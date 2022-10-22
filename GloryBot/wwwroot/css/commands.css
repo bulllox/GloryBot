@@ -1,0 +1,29 @@
+@import url('./root.css');
+
+#commands th {
+    background-color: var(--button-green);
+}
+
+#commands li {
+    list-style: none;
+    float: left;
+    margin-right: 4px;
+}
+
+#commands li:last-child {
+    margin-right: 0px;
+}
+
+#commands td {
+    color:white;
+}
+
+#commands a {
+    color:white;
+    text-decoration: none;
+}
+
+#commands a:hover {
+    text-decoration: underline;
+    color: var(--button-green-hover);
+} 

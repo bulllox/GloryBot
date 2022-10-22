@@ -1,0 +1,89 @@
+@{
+    ViewData["Title"] = "Plugins";
+     Layout = "_pluginLayOut";
+    var plugins = ChatInstance.PluginList;
+}
+@using GloryBot.Models
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        .switch {
+            position: relative;
+            width: 50px;
+            height: 17px;
+            background-color: grey;
+            border-radius: 17px;
+            border: 1px solid silver;
+            cursor: pointer;
+        }
+
+        .round {
+            position: absolute;
+            width: 17px;
+            height: 17px;
+            background-color: white;
+            border-radius: 50%;
+        }
+
+        .off {            
+            left: 0;
+            
+        }
+
+        .on {
+            right: 0;
+        }
+
+       
+        .switch input {
+            display: none;
+            width: 0;
+            height: 0;
+        } 
+    </style>
+
+    <script>
+        
+    </script>
+</head>
+
+<body>
+    <table border="0" cellpadding="4" cellspacing="0" align="center" width="95%">
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Command</th>
+            <th>Option</th>
+        </tr>
+        @if(plugins.Count > 0) {
+            @foreach (var key in plugins.Keys)
+            {
+                <tr>
+                    <td>@plugins[key].Name</td>
+                    <td>@plugins[key].Description</td>
+                    <td>@plugins[key].Command</td>
+                    <td>
+                    <div class="switch" data-command="@plugins[key].Command" data-plugin="@plugins[key].Name">
+                        @if(plugins[key].IsActive) {
+                            <div class="round on"></div>
+                            <input type="checkbox" checked="checked">
+                        } 
+                        else {
+                            <input type="checkbox">
+                            <div class="round"></div>
+                        }
+                    </div>
+                    </td>
+                </tr>
+            }
+        } else {
+            <tr>
+                <td colspan="4">No Plugins</td>
+            </tr>
+        }
+    </table>
+</body>
+
+</html>

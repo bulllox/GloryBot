@@ -1,0 +1,38 @@
+﻿@{
+    Layout = "_Layout";
+}
+<style>
+    ul li ul li {color: white; list-style:square;}
+    .item {margin-bottom: 15px;}
+    .header {
+        width: 400px;
+        height: 30px;
+        color: black !important;
+        padding: 5px;
+        background-color: var(--border-color);
+    }
+</style>
+<ul>
+    <li class="item">
+        <span class="header">Follow Variables</span>
+        <ul>
+            <li>{user} will print username of sender</li>
+        </ul>
+    </li>
+    <li class="item">
+        <span class="header">Sub Variables</span>
+        <ul>
+            <li>{user} will print username of sender</li>
+            <li>{tier} will print subtier</li>
+            <li>{lvl} will print sub level</li>
+        </ul>
+    </li>
+    <li class="item">
+        <span class="header">Spell Variables</span>
+        <ul>
+            <li>{spell_user} will print the username of spell user</li>
+            <li>{spell_count} will print how many spells was used</li>
+            <li>{spell_price} will print the value of sended spell(s)</li>
+        </ul>
+    </li>    
+<ul>

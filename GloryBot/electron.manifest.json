@@ -1,0 +1,68 @@
+{
+  "executable": "GloryBot",
+  "splashscreen": {
+    "imageFile": "wwwroot/images/splashscreen.png"
+  },
+  "name": "GloryBot",
+  "author": "Bulllox",
+  "singleInstance": false,
+  "aspCoreBackendPort": 5000,
+  "build": {
+    "appId": "com.GloryBot.app",
+    "productName": "GloryBot",
+    "copyright": "Copyright © 2022",
+    "buildVersion": "0.1.3",
+    "compression": "maximum",
+    "directories": {
+      "output": "../../../bin/Build"
+    },
+    "linux": {
+      "target": [
+        "snap",
+        "deb",
+        "AppImage"
+      ],
+      "icon": "../../../wwwroot/Icons/Logo.png"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "publish": {
+        "provider": "github",
+        "owner": "Bulllox",
+        "repo": "GloryBot",
+        "channel": "latest",
+        "token": "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",
+        "publishAutoUpdate": true,
+        "releaseType": "release"
+      },
+      "icon": "../../../wwwroot/Icons/Logo.png"
+    },
+
+    "nsis": {
+      "oneClick": false,
+      "createDesktopShortcut": true,
+      "allowToChangeInstallationDirectory": true
+    },
+    "extraResources": [
+      {
+        "from": "./bin",
+        "to": "bin",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "files": [
+      {
+        "from": "./ElectronHostHook/node_modules",
+        "to": "ElectronHostHook/node_modules",
+        "filter": [
+          "**/*"
+        ]
+      },
+      "**/*"
+    ]
+  }
+}

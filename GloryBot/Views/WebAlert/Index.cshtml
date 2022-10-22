@@ -1,0 +1,13 @@
+@using GloryBot.Events
+@{
+    Layout = "_WebAlert";
+}
+<link rel="stylesheet" href="~/css/animations.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/webalert.css" asp-append-version="true" />
+<div id="alertBox" style="display: none;">
+    <div id="alertImage"></div>
+    <div id="alertText"></div>
+    <audio id="alertSound" src="" style="display:none;" controls="controls" webkit-playsinline="true"
+           playsinline="true"></audio>
+</div>
+

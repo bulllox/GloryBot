@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - GloryBot</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(() => {
+            document.getElementById("MinButton").addEventListener("click", () => {
+            $.ajax({
+                type:"POST",
+                url: '/home/MinimizeWindow',
+                data: {state: true}
+            });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div id="chatAlert" class="groupBox" style="z-index:60000; width: 500px; display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        <div class="groupBoxTitle alertUser"></div>
+        <div class="groupBoxContent alertContent"></div>
+    </div>
+
+    
+  
+    <table id="wrapper" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+            <td colspan="2" class="DragBar">
+                <div class="Logo-Small"></div>
+                <div class="title">GloryBot - @ViewData["Title"]</div>
+                <div class="Buttons">
+                    <button class="titlebar-button" id="MinButton">-</button>
+                        
+                    <button class="titlebar-button" id="CloseButton" onclick="window.close();" style="color: var(--text-color);">X</button>
+                    
+                </div>
+
+            </td>
+        </tr>
+        <tr>
+            <td class="menu" width="220" valign="top" align="left">
+                <div class="Logo">
+
+                </div>
+                <div style="z-index: 50000;" class="list-group">
+                    @foreach(var button in GetMenu()) {
+                        <div class="btn-group dropright">
+                        @if (button.SubMenus != null)
+                        {
+                            @if (button.Enabled)
+                            {
+                                <button type="button" class="btn-menu dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@button.Name</button>
+                                <div style="z-index: 50000;" class="dropdown-menu">
+                                    @foreach (var submenu in button.SubMenus)
+                                    {
+                                        @if (submenu.Enabled)
+                                        {
+                                            <a href="@submenu.Url" class="dropdown-item">@submenu.Name</a>
+                                        }
+                                    }    
+                                </div>
+                            }
+                        }
+                        else {
+                            @if (button.Enabled)
+                            {
+                                <button type="button" class="btn-menu" onclick="window.location = '@button.Url';">@button.Name</button>
+                            }
+                        }
+                        </div>
+                    }
+                  </div>
+
+                <button class="btnSettings" onclick="window.location = '/settings/index'">@Translate("layout.settings", "Settings")</button>
+            </td>
+            <td class="content" valign="top" align="left">
+                @if (TempData["state"] != null && (int)TempData["state"] == 1)
+                {
+                    <div class="alert alert-success" role="alert" id="alertbox">@TempData["msg"]</div>
+                    <script>
+                        setTimeout(() => {
+                            $('#alertbox').fadeOut();
+                        }, 3000);
+                    </script>
+                }
+                else if (TempData["state"] != null && (int)TempData["state"] == 0)
+                {
+                    <div class="alert alert-error" role="alert" id="alertbox">@TempData["msg"]</div>
+                    <script>
+                        setTimeout(() => {
+                            $('#alertbox').fadeOut();
+                        }, 3000);
+                    </script>
+                }
+                @RenderBody()
+            </td>
+        </tr>
+    </table>
+
+    <script>
+        
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>
+@section Scripts {
+    <script>
+     $(document).ready(function(){
+        $('.dropdown-toggle').dropdown()
+    });
+</script>
+}

@@ -1,0 +1,124 @@
+@{
+    ViewData["Title"] = "Commands";
+    var commands = (List<CommandModel>)ViewData["Commands"];
+}
+@using GloryBot.Models
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+<link rel="stylesheet" href="~/css/commands.css" asp-append-version="true">
+<link href="~/css/font-awesome/all.css" rel="stylesheet">
+<script src="~/js/font-awesome/all.js"></script>
+<style>
+
+    .buttons {
+        width: 300px;
+        float: right;
+        text-align: right;
+        margin-bottom: 10px;
+    }
+
+        .buttons a {
+            color: black;
+            font-size: 16px;
+            font-weight: bolder;
+            text-decoration: none;
+        }
+
+    .btn-green {
+        width: 120px;
+        border-radius: 10px;
+        padding: 4px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+    }
+
+        .btn-green:hover {
+            background-color: var(--button-green-hover);
+        }
+</style>
+
+</head>
+
+<body>
+    <div class="buttons"><a href="/commands/add" class="btn-green">Add Command</a></div>
+    <table id="addCommand" style="display: none;" border="0" cellpadding="4" cellspacing="0">
+        <tr>
+            <td style="color:white;">Command:</td>
+            <td><input type="text" id="commandName"></td>
+        </tr>
+        <tr>
+            <td style="color:white;">
+                Command Desc:
+            </td>
+            <td>
+                <input type="text" id="commandDesc">
+            </td>
+        </tr>
+        <tr>
+            <td style="color:white;">
+                Command Text:
+            </td>
+            <td>
+                <textarea id="commandText" rows="12" cols="40"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td style="color:white;">Roles:</td>
+            <td><input type="text" id="roles"> <div style="color:white;">// Roles are seperated with ,</div></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="right" id="buttons"></td>
+        </tr>
+        <tr>
+            <td>
+                <fieldset style="color:white;">
+                    <legend>@Translate("notice", "Notice")</legend>
+                    Roles:
+                    <ul>
+                        <li>streamer</li>
+                        <li>editor</li>
+                        <li>supereditor</li>
+                        <li>user</li>
+                    </ul>
+                </fieldset>
+            </td>
+        </tr>
+    </table>
+    <table border="1" id="commands" cellpadding="4" cellspacing="0" align="center" width="95%">
+        <tr>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Option</th>
+        </tr>
+        @foreach (var command in commands)
+        {
+            <tr>
+                <td>@command.Command</td>
+                <td>
+                    @foreach (var role in command.Roles)
+                    {
+                        <li>@role</li>
+                    }
+                </td>
+                <td width="100">
+                    <a href="/commands/delete?commandName=@command.Command">
+                        <i style="color:red !important;"
+                       class="fa-solid fa-trash-can"></i>
+                    </a> | <a href="/commands/edit?commandName=@command.Command"><i class="fa-solid fa-pen-to-square"></i></a>
+                </td>
+            </tr>
+        }
+    </table>
+
+</body>
+
+</html>
+
+@section Scripts {
+
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/Nodification.js" asp-append-version="true"></script>
+    }

@@ -1,0 +1,102 @@
+﻿@using GloryBot.Models.SaveModels
+@using GloryBot.Models
+@model CommandSaveModel
+@{
+    Layout = "_Layout";
+    var command = (CommandModel)ViewBag.Command;
+    var role = "";
+    foreach (var r in command.Roles)
+    {
+        role += $"{r}, ";
+    }
+    if (role.EndsWith(", "))
+    {
+        role = role.Remove(role.Length - 2);
+    }
+}
+<style>
+    .input-group {
+        border: 1px solid var(--border-color) !important;
+        border-radius: var(--small-border-radius) !important;
+    }
+
+    .input-group-prepend {
+        width: var(--large-Input-Title) !important;
+    }
+
+
+    .input-group-text {
+        width: 190px !important;
+        background-color: var(--bg-color) !important;
+        border: none !important;
+        color: var(--text-color) !important;
+    }
+
+    input[type="text"], textarea {
+        background-color: rgb(36, 36, 36) !important;
+        border: 1px solid rgb(20, 20, 20) !important;
+        color: white !important;
+    }
+</style>
+
+<html>
+
+ <head>
+     <script>
+         function insert(text) {
+             $("textarea").text(text);
+
+         }
+     </script>
+ </head>
+
+<body onload="javascript:insert('@command.CommandDesc')">
+    @using (Html.BeginForm("EditCommand", "Commands", FormMethod.Post))
+    {
+        <div class="groupBox" style="width: 95% !important;">
+            <div class="groupBoxTitle">Edit Command</div>
+            <div class="groupBoxContent">
+                <div class="input-group mb-2">
+                    <label class="input-group-text">Command</label>
+                    <input type="hidden" class="form-control" value="@command.Command" asp-for="OldName">
+                    <input type="text" class="form-control" value="@command.Command" asp-for="Name">
+                </div>
+                <div class="input-group mb-2">
+                    <label class="input-group-text">Command Description</label>
+                    <input type="text" class="form-control" value="@command.CommandDesc" asp-for="Description">
+                </div>
+                <div class="input-group mb-2">
+                    <label class="input-group-text">Command Text</label>
+                    <textarea class="form-control" asp-for="Text"></textarea>
+                </div>
+                <div class="input-group mb-2">
+                    <label class="input-group-text">Roles</label>
+                    <input type="text" class="form-control" style="margin-right: 5px; width: 10% !important;" value="@role" asp-for="Roles"> // Roles are seperated with (,)
+                </div>
+                <div class="input-group mb-2" style="display: flex; justify-content: center; align-items:center;">
+                    <button class="btn-green">@Translate("Save", "Save")</button>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="groupBox" style="margin-top: 20px;">
+        <div class="groupBoxTitle">Useable Roles</div>
+        <div class="groupBoxContent">
+            <ul>
+                <li>Streamer</li>
+                <li>Mod</li>
+                <li>Editor</li>
+                <li>Sub</li>
+                <li>SuperMod</li>
+                <li>Follower</li>
+                <li>Admin</li>
+                <li>Warden</li>
+                <li>Ace</li>
+                <li>AcePlus</li>
+                <li>All</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

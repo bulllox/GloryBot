@@ -1,0 +1,16 @@
+﻿@using GloryBot.Models.SaveModels
+@model BetaKeyModel
+@{
+    Layout = "_Beta";
+}
+
+@using (Html.BeginForm("UseKey", "Betatest"))
+{
+    <div class="form-group">
+        <div class="input-group mb-2">
+            <label class="input-group-text">Beta Key</label>
+            <input type="text" class="form-control" asp-for="Key" />
+        </div>
+        <button class="btn-green">Ok</button>
+    </div>
+}

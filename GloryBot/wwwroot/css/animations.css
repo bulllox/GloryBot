@@ -1,0 +1,70 @@
+﻿/* Animations */
+.slideIn {
+    animation: slideIn 4s;
+    animation-fill-mode: forwards;
+}
+
+.fadeIn {
+    opacity: 0;
+    animation-name: fadeIn;
+    animation-duration: 4s;
+    animation-fill-mode: forwards;
+}
+
+.roleIn {
+    animation: roleIn 4s;
+    animation-fill-mode: forwards;
+}
+
+.pulse {
+    animation: pulse 4s;
+    -moz-animation: pulse 4s;
+    -webkit-animation: pulse 4s;
+    animation-fill-mode: forwards;
+    -moz-animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes roleIn {
+    0% {
+        transform: translate(-200%, -50%);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translate(-200%, -50%);
+    }
+
+    100% {
+        transform: translate(-50%, -50%);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: translate(-50%, -50%) scale(0.95);
+    }
+
+    70% {
+        transform: translate(-50%, -50%) scale(1.75);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(100%);
+    }
+}

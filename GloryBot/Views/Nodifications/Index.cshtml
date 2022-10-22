@@ -1,0 +1,112 @@
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Nodification";
+    ViewData["controller"] = "Nodifications";
+    var FClass = "cnorm";
+}
+@using GloryBot.Models
+
+<link href="~/css/font-awesome/all.css" rel="stylesheet">
+<script src="~/js/font-awesome/all.js"></script>
+<body>
+    <table border="0" cellpadding="4" id="NodiTable" class="display" data-order='[[ 1, "asc" ]]'>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Lines</th>
+                <th>Options</th>
+            </tr>
+        </thead>
+        <tbody style="color:white;">
+            @foreach (var item in ChatInstance.NodyList)
+            {
+                <tr class="@FClass">
+                    <td>@item.Name</td>
+                    <td>@item.CallAfterLines</td>
+                    <td>
+                        Active:
+                        @if (item.Active)
+                        {
+                            <input type="checkbox" checked id="active_@item.Id" onchange="javascript:changeActive('@item.Id');">
+                        }
+                        else
+                        {
+                            <input type="checkbox" id="active_@item.Id" onchange="javascript:changeActive('@item.Id');">
+                        }
+                        || <a href="/nodifications/edit?id=@item.Id"><i class="fa-solid fa-pen-to-square"></i></a> || <a href="/nodifications/delete?id=@item.Id">
+                            <i style="color:red !important;"
+                       class="fa-solid fa-trash-can"></i></a>
+                    </td>
+                </tr>
+                FClass = (FClass == "cnorm") ? "cdark" : "cnorm";
+            }
+        </tbody>
+    </table>
+
+</body>
+
+@section Scripts {
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/Nodification.js" asp-append-version="true"></script>
+    <script>
+        function changeActive(id) {
+            var state = "off";
+            if ($(`#active_${id}`).is(':checked')) {
+                state = "on";
+            } else {
+                state = "off";
+            }
+            var data = { id, state };
+            ipcRenderer.send("setNodyState", data);
+        }
+        $(document).ready(() => {
+            var lang = '@DashboardInstance.SettingsModel.Lang';
+            $(`#NodiTable`).DataTable({
+                language: {
+                    url: `/DataTables/${lang}.json`
+                }
+            });
+        });
+    </script>
+}
+
+    <style>
+        .cnorm {
+            background-color: rgb(73, 73, 73) !important;
+            color: white !important;
+        }
+
+        .cdark {
+            background-color: rgb(15, 15, 15) !important;
+            color: white !important;
+        }
+        #NodiTable_length label, #NodiTable_filter, #NodiTable_info, #NodiTable_previous, #NodiTable_next,#NodiTable_length {
+            color: white !important;
+        }
+
+        #NodiTable_length option {
+            background-color: var(--bg-color) !important;
+            color:white;
+        }
+
+        #NodiTable {
+            border-collapse: collapse;
+            border: 1px solid var(--border-color) !important;
+        }
+
+            #NodiTable th {
+                background-color: var(--border-color);
+            }
+
+            #NodiTable tbody td {
+                border-bottom: 1px solid var(--border-color) !important;
+            }
+
+            #NodiTable tbody tr:last-child td {
+                border-bottom: none !important;
+            }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button, .dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_length select {
+            color: white !important;
+        }
+    </style>

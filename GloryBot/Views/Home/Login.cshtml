@@ -1,0 +1,19 @@
+@{
+    Layout = "_Login";
+}
+<script src="~/js/site.js" asp-append-version="true"></script>
+@using(Html.BeginForm("Login", "Login", FormMethod.Post)) {
+    <div class="form-container" style="width: 95%; margin: 0 auto;">
+        <div class="input-group mb-3" style="border: 1px solid var(--border-color); border-radius: 5px;">
+            <label class="input-group-text">Username</label>
+            <input type="text" id="username" class="form-control"/>        
+        </div>
+        <div class="input-group mb-3" style="border: 1px solid var(--border-color);">
+            <label class="input-group-text">Password</label>
+            <input type="password" id="password" class="form-control"/>        
+        </div>
+        <div class="input-group mb-3">
+            <input type="submit" id="submit_login" class="GloryButton" style="border-radius: 5px; width: 200px; height: 40px;"/>        
+        </div>
+    </div>
+}

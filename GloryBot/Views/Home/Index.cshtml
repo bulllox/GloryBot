@@ -1,0 +1,119 @@
+@using GloryBot.Models.SaveModels
+@using GloryBot.Models
+@model HomeModel
+@{
+    ViewData["controller"] = "Home";
+    ViewData["Title"] = "Dashboard";
+    var streamInfo = (ViewData["streamInfo"] != null) ? (StreamModel)ViewData["streamInfo"] : new StreamModel();
+    var catInfo = (ViewData["categorys"] != null) ? (GameCategoryModel)ViewData["categorys"] : new GameCategoryModel();
+}
+
+<link rel="stylesheet" href="~/css/home.css" asp-append-version="true">
+<div class="topmenu" style="margin: 0 auto;">
+    <div class="groupBox">
+        <div class="groupBoxTitle">@Translate("dashboard.channelData")</div>
+        <div class="groupBoxContent" style="display: flex; align-items: center;">
+            <div>
+            <li>Name: @streamInfo.username</li>
+            <li id="liveStatus">Status: 
+                @if (streamInfo.is_live)
+                { 
+                    <span style="color: green;">Live</span>
+                }
+                else
+                { 
+                    <span
+                    style="color:orange;">Offline</span>
+                }
+            </li>
+            <li>Url:  <span class="uris" id="GoToStream">@streamInfo.channel_url</span></li>
+            </div>
+        </div>
+    </div>
+    <div class="groupBox avatar">
+        <div class="groupBoxTitle">Avatar</div>
+        <div class="groupBoxContent" style="display:flex; justify-content: center; align-items: center;"><img src="@streamInfo.profile_pic" width="150" height="150"></div>
+    </div>
+    <div class="groupBox">
+        <div class="groupBoxTitle">@Translate("dashboard.streamerInfo")</div>
+        <div class="groupBoxContent" style="display: flex; algin-items: center;">
+            <div>
+            <li id="follower">Follower: @streamInfo.followers</li>
+            <li id="subscriber">Subscriber: @streamInfo.subscriber_num</li>
+            <li id="viewer">Viewer: @streamInfo.current_viewers</li>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="middleMenu" style="width: 95%;">
+    @using(Html.BeginForm("SaveSettings", "Home", FormMethod.Post)) {
+        <div class="groupBox" style="width: 100%;">
+            <div class="groupBoxTitle">@Translate("dashboard.streamSettings", "Stream Settings")</div>
+            <div class="groupBoxContent">
+                <div style="display:inline-flex; gap: 5%;">
+                    <div>
+                        @Translate("dashboard.streamTitle", "Stream Title") <input type="text" name="streamtitle" asp-for="StreamTitle" id="streamTitle" value="@streamInfo.live_title" />
+                    </div>
+                    <div>
+                        @Translate("dashboard.streamcategory", "Categorys") <select asp-for="Category" id="streamCategorys">
+                            <option></option>
+                            @foreach (var cat in catInfo.category_info)
+                            {
+                                @if(cat.id == streamInfo.category_id) {
+                                    <option value="@cat.id" selected>@cat.name</option>
+                                } else {
+                                    <option value="@cat.id">@cat.name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div style="margin-top: 10px;">
+                    <table border="0" cellpadding="4" cellspacing="0" width="100%">
+                        <tr>
+                            <td colspan="2">@Translate("dashboard.streamageLimit", "Age Limit")</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <select id="ageLimit" asp-for="AgeLimit">
+                                    <option></option>
+                                    <option value="CHANNEL_AUDIENCE_TYPE_FAMILYFRIENDLY">@Translate("family", "Family")</option>
+                                    <option value="CHANNEL_AUDIENCE_TYPE_TEEN">@Translate("teen", "Teen")</option>
+                                    <option value="CHANNEL_AUDIENCE_TYPE_EIGHTEENPLUS">@Translate("adult", "Adult")</option>
+                                </select>
+                            </td>
+                            <td align="right"><button style="width: 120px; height: 30px; border-radius:5px; font-weight: bold;" id="btnSaveStream" class="btn-green">@Translate("Save", "Save")</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/Nodification.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(() => {
+            var ageLimit = '@streamInfo.audi_type';
+            switch(ageLimit) {
+                case "CHANNEL_AUDIENCE_TYPE_FAMILYFRIENDLY":
+                    var limit = $('#ageLimit').find("option[value='CHANNEL_AUDIENCE_TYPE_FAMILYFRIENDLY']");
+                    limit.attr("selected", "selected");
+                break;
+                case "CHANNEL_AUDIENCE_TYPE_TEEN":
+                    var limit = $('#ageLimit').find("option[value='CHANNEL_AUDIENCE_TYPE_TEEN']");
+                    limit.attr("selected", "selected");
+                break;
+                case "CHANNEL_AUDIENCE_TYPE_EIGHTEENPLUS":
+                    var limit = $('#ageLimit').find("option[value='CHANNEL_AUDIENCE_TYPE_EIGHTEENPLUS']");
+                    limit.attr("selected", "selected");
+                break;
+            }
+        });
+    </script>
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/HomeHub.js" asp-append-version="true"></script>
+}

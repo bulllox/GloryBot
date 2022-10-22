@@ -1,0 +1,105 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+    StreamModel streamData = null;
+    if (ViewData["StreamInfo"] != null)
+    {
+        streamData = (StreamModel)ViewData["StreamInfo"];
+    } else {
+        streamData = new StreamModel();
+    }
+    var categorys = Globals.GameCategorys.category_info.OrderBy(x => x.name).ToList();
+}
+<html>
+<head>
+   <style>
+       option {
+           height: 30px;
+           display: flex;
+           align-items: center;
+       }
+   </style>
+</head>
+<body onload="document.getElementById('streamAgeLimit').value = '@streamData.audi_type';">
+<div class="topmenu">
+    <div class="groupBox">
+        <div class="groupBoxTitle">@Translate("dashboard.streamerData")</div>
+        <div class="groupBoxContent">
+            <li>Name: @streamData.username</li>
+            <li>Status: @if (streamData.is_live)
+                { 
+                    <span style="color: var(--button-green);">Live</span>
+                }
+                else
+                { 
+                    <span
+                    style="color:orange;">Offline</span>
+                }</li>
+            <li>Url: <span class="uris" id="GoToStream">@streamData.channel_url</span></li>
+        </div>
+    </div>
+
+    <div class="groupBox">
+        <div class="groupBoxTitle">@Translate("dashboard.streamerInfo")</div>
+        <div class="groupBoxContent">
+            <li>Follower: @streamData.followers</li>
+            <li>Subscriber: @streamData.subscriber_num</li>
+            <li>Viewer: @streamData.current_viewers</li>
+        </div>
+    </div>
+</div>
+
+    <div class="middleMenu">
+        <div class="groupBox">
+            <div class="groupBoxTitle">@Translate("dashboard.streamSettings")</div>
+            <div class="groupBoxContent">
+                <div style="display: flex;">
+                    <div class="StreamTitle">
+                        <div>@Translate("dashboard.title")</div>
+                        <div><input type="text" id="streamTitle" value="@streamData.live_title"></div>
+                    </div>
+                    <div class="StreamCategory">
+                        <div style="margin-left: 10px;">@Translate("dashboard.category")</div>
+                        <div>
+                            <select id="gameCategorys" style="margin-left: 10px; width:450px;">
+                                @foreach(var category_info in categorys) {
+                                    if(category_info.id == streamData.category_id) {
+                                        <option selected value="@category_info.id">@category_info.name</option>
+                                    } else {
+                                        <option value="@category_info.id">@category_info.name</option>
+                                    }
+                                }
+                            </select>    
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lastCategory">
+                    @foreach(var lastCat in Globals.LastCategorys) {
+                        <li class="lastCat" id="lastCat">@lastCat.Name</li>
+                    }
+                </div>
+                <div>
+                    <div style="clear:boath;"></div>
+                    <div class="StreamAgeLimit">
+                        <div>@Translate("dashboard.ageLimit")</div>
+                        <div>
+                            <select id="streamAgeLimit">
+                                <option></option>
+                                <option value="CHANNEL_AUDIENCE_TYPE_FAMILYFRIENDLY">@Translate("family", "Family")</option>
+                                <option value="CHANNEL_AUDIENCE_TYPE_TEEN">@Translate("teen", "Teen")</option>
+                                <option value="CHANNEL_AUDIENCE_TYPE_EIGHTEENPLUS">@Translate("adult", "Adult")</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="Save" style="margin-left: 280px;">
+                        <button class="btn-green" id="SaveInfo">@Translate("save")</button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

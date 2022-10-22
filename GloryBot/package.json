@@ -1,0 +1,21 @@
+{
+  "name": "glorybot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "startWin": "electronize.exe  start",
+    "startLinux": "electronize start",
+    "watch": "electronize.exe start /watch",
+    "buildWin": "electronize.exe build /target win",
+    "deploy": "electronize.exe build /target win /electron-params \"-p always\"",
+    "buildLinux": "electronize build /target linux",
+    "kill": "Taskkill /IM electron.exe /F",
+    "restore": "dotnet restore"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "electron-updater": "^5.2.1"
+  }
+}

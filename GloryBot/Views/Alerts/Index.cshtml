@@ -1,0 +1,456 @@
+
+@using GloryBot.Models
+@using System.Text.RegularExpressions
+@using System.Web
+@model AlertUploadModel
+
+@{
+    ViewData["Title"] = "Alerts";
+    Layout = "_Layout";
+
+}
+<html>
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"></script>
+    <script src="~/lib/colorpicker/jquery.colorpicker.js" asp-append-version="true"></script>
+    <script src="~/js/alerts.js" asp-append-version="true"></script>
+    <link rel="stylesheet" href="~/css/alerts.css" asp-append-version="true" />
+    <link href="~/css/font-awesome/all.css" rel="stylesheet">
+    <script src="~/js/font-awesome/all.js"></script>
+
+    <style>
+       
+    </style>
+
+</head>
+
+<body>
+    <div class="topmenu">
+        <div class="groupBox">
+            <button id="btnFollow" onclick="javascript:ChangeTab('alertFollow');" class="btn-green">Follow</button>
+            <button id="btnSubs" onclick="javascript:ChangeTab('alertSub');" class="btn-green">Subscribe</button>
+            <button id="btnSpell" onclick="javascript:ChangeTab('alertSpell');" class="btn-green">Spells</button>
+            <button id="btnSpell" onclick="javascript:ChangeTab('alertGift');" class="btn-green">Gift Subs</button>
+        </div>
+    </div>
+
+    <div class="middleMenu">
+        <div class="groupBox" id="alertFollow">
+            <div class="groupBoxTitle">Follower Alert</div>
+            <div class="groupBoxContent">
+
+                <div class="groupBox preview" style=" background-color: rgb(44, 44, 44) !important;">
+                    <div class="groupBoxTitle">Vorschau</div>
+                    <div class="groupBoxContent" style="text-align:center;">
+                        <div id="alertBox" style="text-align: center;">
+                            <div id="alertfollowImagePreview"></div>
+                            <div id="alertfollowTextPreview"></div>
+                            <audio style="display:none; margin: 0 auto;" id="alertfollowAudioPreview" controls></audio>
+                        </div>
+                    </div>
+                </div>
+                @* @Html.Raw(ViewBag.AlertTable["follow"]) *@
+                @using (Html.BeginForm("SaveAlert", "Alerts", FormMethod.Post, new
+                {
+                    enctype = "multipart/form-data"
+                }))
+                {
+                    var followerModel = (ChatInstance.Alerts.Exists(x => x.Name == "follow")) ? ChatInstance.Alerts.Where(x =>
+                    x.Name == "follow").First() : new AlertModel();
+                    <input type="hidden" asp-for="Name" value="follow">
+                    <div class="form-container">
+                        <div class="input-group mb-1">
+                            <label class="input-group-text">Text</label>
+                            <input type="text" id="followAlertText" asp-for="Text" value="@followerModel.AlertText" class="form-control" style="width: 40% !important;"><a href="/alerts/variables">Custom Variables</a>
+                        </div>
+                        <div class="input-group mb-1">
+
+                            <label class="input-group-text">Image</label>
+                            <input type="file" id="followImageFile" asp-for="ImageFile" class="form-control" accept=".jpg, .gif, .png"
+                               value="@followerModel.ImagePath">
+                        </div>
+                        <div class="input-group mb-1">
+                            <label class="input-group-text" for="followSound">Sound</label>
+                            <input type="file" id="followSound" asp-for="SoundFile" class="form-control" value="@followerModel.SoundFilePath"
+                               accept=".mp3, .ogg, .wav">
+                        </div>
+                        <div class="input-group mb-1">
+                            <label class="input-group-text" for="followAnim">Animation</label>
+                            
+                            <select id="followAnimation" asp-for="Animation">
+                                <option></option>
+                                <option value="None">None</option>
+                                <option value="Slide In">Slide In</option>
+                                <option value="Fade In">Fade In</option>
+                                <option value="Role In">Role In</option>
+                                <option value="Pulse">Pulse</option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-1">
+                            <label class="input-group-text">TextColor</label>
+                            <input type="text" id="followColorValue" asp-for="TextColor">
+                            <div id="followColor" style="display:none;">
+                                <div id="followColorPicker">
+                                    
+                                </div>
+                                <button class="btn-green" id="followColorOkbtn" style="margin:0 auto; margin-top: 20px;">Ok</button>
+                            </div>
+                        </div>
+                        <div class="input-group mb-1 space">
+                            <label class="input-group-text">Duration</label>
+                            <input type="hidden" id="followDurationValue" asp-for="AlertDuration" value="3">
+                            <div id="followDurationSlider" style="width: 89%;">
+                                <div id="followDurationHandler" class="ui-slider-handle"></div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-1 space">
+                            <label class="input-group-text">Volume</label>
+                            <div id="followVolumeSlider" style="width: 89%;">
+                                <input type="hidden" id="followVolumeValue" asp-for="AlertVolume" value="0.2">
+                        
+                                <div id="followVolumeHandler" class="ui-slider-handle" asp-for="AlertVolume">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-1" style="text-align: center;">
+                            <input type="submit" class="btn-green" value='@Translate("Save", "Save")'>
+                        </div>
+                    </div>
+                     <script>
+                            const followPicker = new jQuery.ColorPicker("#followColorPicker", {
+                                    color: "#ffffff",
+                                    imagepath: "../images/",
+                                    change: function (hex) {
+                                        $('#followColorValue').val(hex);
+                                        $('#alertfollowTextPreview').css("color", hex);
+                                    }
+                                });
+                        
+                    </script>
+                    @if (followerModel != null && followerModel.AlertText != "")
+                    {
+                        <script lang="javascript">
+                            $(document).ready(() => {
+                                
+                                followPicker.hex("@followerModel.TextColor");
+                                
+                                SetData("follow", "@followerModel.AlertText", "@followerModel.SoundFilePath", "@followerModel.ImagePath", "@followerModel.AlertDuration", "@followerModel.AlertVolume", "@followerModel.Animation");
+                            });
+                        </script>
+                    }
+                }
+            </div>
+        </div>
+        <div class="groupBox" id="alertSub" style="display: none;">
+            <div class="groupBoxTitle">Sub Alert</div>
+            <div class="groupBoxContent">
+                <div class="groupBox preview" style=" background-color: rgb(44, 44, 44) !important;">
+                    <div class="groupBoxTitle">Vorschau</div>
+                    <div class="groupBoxContent" style="text-align:center;">
+                        <div id="alertBox">
+                            <div id="alertsubImagePreview"></div>
+                            <div id="alertsubTextPreview"></div>
+                            <audio style="display:none;" id="alertsubAudioPreview" controls></audio>
+                        </div>
+                    </div>
+                </div>
+                @* @Html.Raw(ViewBag.AlertTable["sub"]) *@
+                @using (Html.BeginForm("SaveAlert", "Alerts", FormMethod.Post, new
+                {
+                    enctype = "multipart/form-data"
+                }))
+                {
+                    var subModel = (ChatInstance.Alerts.Exists(x => x.Name == "sub")) ? ChatInstance.Alerts.Where(x =>
+                    x.Name == "sub").First() : new AlertModel();
+                    <input type="hidden" asp-for="Name" value="sub">
+
+                    <div class="form-container">
+                        <div class="input-group mb-1">
+                            <label class="input-group-text">Text</label>
+                            <input type="text" id="subAlertText" asp-for="Text" value="@subModel.AlertText" class="form-control" style="width: 40% !important;"><a href="/alerts/variables">Custom Variables</a>
+                        </div>
+                        <div class="input-group mb-1">
+
+                            <label class="input-group-text">Image</label>
+                            <input type="file" id="subImageFile" asp-for="ImageFile" class="form-control" accept=".jpg, .gif, .png"
+                               value="@subModel.ImagePath">
+                        </div>
+                        <div class="input-group mb-1">
+                            <label class="input-group-text" for="subSound">Sound</label>
+                            <input type="file" id="subSound" asp-for="SoundFile" class="form-control" value="@subModel.SoundFilePath"
+                               accept=".mp3, .ogg, .wav">
+                        </div>
+                        <div class="input-group mb-1">
+                            <label class="input-group-text" for="subAnim">Animation</label>
+
+                            <select id="subAnimation" asp-for="Animation">
+                                <option></option>
+                                <option value="None">None</option>
+                                <option value="Slide In">Slide In</option>
+                                <option value="Fade In">Fade In</option>
+                                <option value="Role In">Role In</option>
+                                <option value="Pulse">Pulse</option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-1">
+                            <label class="input-group-text">TextColor</label>
+                            <input type="text" id="subColorValue" asp-for="TextColor">
+                            <div id="subColor" style="display:none;">
+                                <div id="subColorPicker">
+                                </div>
+                                <button class="btn-green" id="subColorOkbtn" style="margin:0 auto; margin-top: 20px;">Ok</button>
+                            </div>
+                        </div>
+                        <div class="input-group mb-1 space">
+                            <label class="input-group-text">Duration</label>
+                            <input type="hidden" id="subDurationValue" asp-for="AlertDuration">
+                            <div id="subDurationSlider" style="width: 89%;">
+                                <div id="subDurationHandler" class="ui-slider-handle"></div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-1 space">
+                            <label class="input-group-text">Volume</label>
+                            <div id="subVolumeSlider" style="width: 89%;">
+                                <input type="hidden" id="subVolumeValue" asp-for="AlertVolume">
+                                <div id="subVolumeHandler" class="ui-slider-handle">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-1" style="text-align: center;">
+                            <input type="submit" class="btn-green" value='@Translate("Save", "Save")'>
+                        </div>
+                    </div>
+                    <script>
+                        const subPicker = new jQuery.ColorPicker("#subColorPicker", {
+                                    color: "#ffffff",
+                                    imagepath: "../images/",
+                                    change: function (hex) {
+                                        $('#subColorValue').val(hex);
+                                        $('#alertsubTextPreview').css("color", hex);
+                                    }
+                                });
+                    </script>
+                    @if (subModel != null && subModel.AlertText != "") {
+                    <script lang="javascript">
+                        $(document).ready(() => {
+                                subPicker.hex("@subModel.TextColor");
+                                SetData("sub", "@subModel.AlertText", "@subModel.SoundFilePath", "@subModel.ImagePath", "@subModel.AlertDuration", "@subModel.AlertVolume", "@subModel.Animation");
+                        });
+                    </script>
+                    }
+                }
+            </div>
+        </div>
+        <div class="groupBox" id="alertSpell" style="display: none;">
+            <div class="groupBoxTitle">Spell Alert</div>
+            <div class="groupBoxContent">
+                <div class="groupBox preview" style=" background-color: rgb(44, 44, 44) !important;">
+                    <div class="groupBoxTitle">Vorschau</div>
+                    <div class="groupBoxContent" style="text-align:center;">
+                        <div id="alertBox">
+                            <div id="alertspellImagePreview"></div>
+                            <div id="alertspellTextPreview"></div>
+                            <audio style="display:none;" id="alertspellAudioPreview" controls></audio>
+                        </div>
+                    </div>
+                </div>
+                @* @Html.Raw(ViewBag.AlertTable["spell"]) *@
+                @using (Html.BeginForm("SaveAlert", "Alerts", FormMethod.Post, new
+                {
+                    enctype = "multipart/form-data"
+                }))
+                {
+                    var spellModel = (ChatInstance.Alerts.Exists(x => x.Name == "spell")) ? ChatInstance.Alerts.Where(x =>
+                    x.Name == "spell").First() : new AlertModel();
+                    <input type="hidden" asp-for="Name" value="spell">
+
+                    <div class="form-container">
+                        <div class="input-group mb-1">
+                            <label class="input-group-text">Text</label>
+                            <input type="text" id="spellAlertText" asp-for="Text" value="@spellModel.AlertText" class="form-control" style="width: 40% !important;"><a href="/alerts/variables">Custom Variables</a>
+                        </div>
+                        <div class="input-group mb-1">
+
+                            <label class="input-group-text">Image</label>
+                            <input type="file" id="spellImageFile" asp-for="ImageFile" class="form-control" accept=".jpg, .gif, .png"
+                               value="@spellModel.ImagePath">
+                        </div>
+                        <div class="input-group mb-1">
+                            <label class="input-group-text" for="spellSound">Sound</label>
+                            <input type="file" id="spellSound" asp-for="SoundFile" class="form-control" value="@spellModel.SoundFilePath"
+                               accept=".mp3, .ogg, .wav">
+                        </div>
+                        <div class="input-group mb-1">
+                            <label class="input-group-text" for="spellAnim">Animation</label>
+                            
+                            <select id="spellAnimation" asp-for="Animation">
+                                <option></option>
+                                <option value="None">None</option>
+                                <option value="Slide In">Slide In</option>
+                                <option value="Fade In">Fade In</option>
+                                <option value="Role In">Role In</option>
+                                <option value="Pulse">Pulse</option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-1">
+                            <label class="input-group-text">TextColor</label>
+                            <input type="text" id="spellColorValue" asp-for="TextColor">
+                            <div id="spellColor" style="display:none;">
+                                <div id="spellColorPicker">
+                                </div>
+                                <button class="btn-green" id="spellColorOkbtn" style="margin:0 auto; margin-top: 20px;">Ok</button>
+                            </div>
+                        </div>
+                        <div class="input-group mb-1 space">
+                            <label class="input-group-text">Duration</label>
+                            <input type="hidden" id="spellDurationValue" asp-for="AlertDuration">
+                            <div id="spellDurationSlider" style="width: 89%;">
+                                <div id="spellDurationHandler" class="ui-slider-handle"></div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-1 space">
+                            <label class="input-group-text">Volume</label>
+                            <div id="spellVolumeSlider" style="width: 89%;">
+                                <input type="hidden" id="spellVolumeValue" asp-for="AlertVolume">
+                                <div id="spellVolumeHandler" class="ui-slider-handle">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-1" style="text-align: center;">
+                            <input type="submit" class="btn-green" value='@Translate("Save", "Save")'>
+                        </div>
+                    </div>
+                    <script>
+                        const spellPicker = new jQuery.ColorPicker("#spellColorPicker", {
+                            color: "#ffffff",
+                            imagepath: "../images/",
+                            change: function (hex) {
+                                $('#spellColorValue').val(hex);
+                                $('#alertspellTextPreview').css("color", hex);
+                            }
+                        });
+                    </script>
+                    @if (spellModel != null && spellModel.AlertText != "")
+                    {
+                        <script lang="javascript">
+                            $(document).ready(() => {
+                                spellPicker.hex("@spellModel.TextColor");
+                                SetData("spell", "@spellModel.AlertText", "@spellModel.SoundFilePath", "@spellModel.ImagePath", "@spellModel.AlertDuration", "@spellModel.AlertVolume", "@spellModel.Animation");
+                            });
+                        </script>
+                    }
+                }
+            </div>
+        </div>
+        <div class="groupBox" id="alertGift" style="display: none;">
+            <div class="groupBoxTitle">Gift Sub Alert</div>
+            <div class="groupBoxContent">
+                @*<div class="groupBox preview" style=" background-color: rgb(44, 44, 44) !important;">
+                    <div class="groupBoxTitle">Vorschau</div>
+                    <div class="groupBoxContent" style="text-align:center;">
+                        <div id="alertBox">
+                            <div id="alertgiftImagePreview"></div>
+                            <div id="alertgiftTextPreview"></div>
+                            <audio style="display:none;" id="alertgiftAudioPreview" controls></audio>
+                        </div>
+                    </div>
+                </div>
+                @using (Html.BeginForm("SaveAlert", "Alerts", FormMethod.Post, new
+                {
+                    enctype = "multipart/form-data"
+                }))
+                {
+                    var giftModel = (ChatInstance.Alerts.Exists(x => x.Name == "gift")) ? ChatInstance.Alerts.Where(x =>
+                    x.Name == "gift").First() : new AlertModel();
+                    <input type="hidden" asp-for="Name" value="gift">
+
+                    <div class="form-container">
+                        <div class="input-group mb-1">
+                            <label class="input-group-text">Text</label>
+                <input type="text" id="giftAlertText" asp-for="Text" value="@giftModel.AlertText" class="form-control" style="width: 40% !important;"><a href="/alerts/variables">Custom Variables</a>
+                        </div>
+                        <div class="input-group mb-1">
+
+                            <label class="input-group-text">Image</label>
+                            <input type="file" id="giftImageFile" asp-for="ImageFile" class="form-control" accept=".jpg, .gif, .png"
+                               value="@giftModel.ImagePath">
+                        </div>
+                        <div class="input-group mb-1">
+                            <label class="input-group-text" for="giftSound">Sound</label>
+                            <input type="file" id="giftSound" asp-for="SoundFile" class="form-control" value="@giftModel.SoundFilePath"
+                               accept=".mp3, .ogg, .wav">
+                        </div>
+                        <div class="input-group mb-1">
+                            <label class="input-group-text" for="giftAnim">Animation</label>
+
+                            <select id="giftAnimation" asp-for="Animation">
+                                <option></option>
+                                <option value="None">None</option>
+                                <option value="Slide In">Slide In</option>
+                                <option value="Fade In">Fade In</option>
+                                <option value="Role In">Role In</option>
+                                <option value="Pulse">Pulse</option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-1">
+                            <label class="input-group-text">TextColor</label>
+                            <input type="text" id="giftColorValue" asp-for="TextColor">
+                            <div id="giftColor" style="display:none;">
+                                <div id="giftColorPicker">
+                                </div>
+                                <button class="btn-green" id="giftColorOkbtn" style="margin:0 auto; margin-top: 20px;">Ok</button>
+                            </div>
+                        </div>
+                        <div class="input-group mb-1 space">
+                            <label class="input-group-text">Duration</label>
+                            <input type="hidden" id="giftDurationValue" asp-for="AlertDuration">
+                            <div id="giftDurationSlider" style="width: 89%;">
+                                <div id="giftDurationHandler" class="ui-slider-handle"></div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-1 space">
+                            <label class="input-group-text">Volume</label>
+                            <div id="giftVolumeSlider" style="width: 89%;">
+                                <input type="hidden" id="giftVolumeValue" asp-for="AlertVolume">
+                                <div id="giftVolumeHandler" class="ui-slider-handle">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-1" style="text-align: center;">
+                            <input type="submit" class="btn-green" value='@Translate("Save", "Save")'>
+                        </div>
+                    </div>
+                    <script>
+                            const giftPicker = new jQuery.ColorPicker("#giftColorPicker", {
+                                    color: "#ffffff",
+                                    imagepath: "../images/",
+                                    change: function (hex) {
+                                        $('#giftColorValue').val(hex);
+                                        $('#alertgiftTextPreview').css("color", hex);
+                                    }
+                                });                  
+                    </script>
+                    @if (giftModel != null && giftModel.AlertText != "")
+                    {
+                        <script lang="javascript">
+                            $(document).ready(() => {
+                                giftPicker.hex("@giftModel.TextColor");
+                                SetData("gift", "@giftModel.AlertText", "@giftModel.SoundFilePath", "@giftModel.ImagePath", "@giftModel.AlertDuration", "@giftModel.AlertVolume", "@giftModel.Animation");
+                            });
+                        </script>
+                    }
+                }
+                *@
+                Comming Soon
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+@section Scripts {
+   
+
+}

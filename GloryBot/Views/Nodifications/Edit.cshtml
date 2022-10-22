@@ -1,0 +1,104 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["controller"] = "Nodifications";
+    var nodification = (NodificationModel)ViewBag.Nodification;
+    
+}
+@using GloryBot.Models
+<style>
+
+    .input-group {
+        border: 1px solid var(--border-color) !important;
+        border-radius: var(--small-border-radius) !important;
+    }
+
+    .input-group-prepend {
+        width: var(--large-Input-Title) !important;
+    }
+
+
+    .input-group-text {
+        width: 100% !important;
+        background-color: var(--bg-color) !important;
+        border: none !important;
+        color: var(--text-color) !important;
+    }
+
+    #lineSlider {
+        width: 100%;
+    }
+
+    #lineSliderHandler {
+        width: 3em;
+        height: 1.6em;
+        top: 50%;
+        margin-top: -.8em;
+        text-align: center;
+        line-height: 1.6em;
+        border-radius: 50%;
+        background-color: var(--title-bgcolor);
+        color: var(--text-color);
+        border: none;
+    }
+
+    #saveNody {
+        width: var(--btnSaveWidth);
+        height: var(--btnSaveHeight);
+    }
+</style>
+
+<div class="groupBox" style="width: 100% !important;">
+    <div class="groupBoxTitle">Add Nodification</div>
+    <div class="groupBoxContent">
+        <div class="input-group mb-2">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Name</span>
+            </div>
+            <input type="hidden" id="nodyId" value="@nodification.Id"/>
+            <input type="text" class="form-control" id="nodyName"  value="@nodification.Name"/>
+        </div>
+
+        <div class="input-group mb-2">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Message</span>
+            </div>
+            <textarea class="form-control" id="nodyMessage">@nodification.Message</textarea>
+        </div>
+        <div class="input-group mb-2">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Lines</span>
+            </div>
+            <div style="width:50%; padding-left: 30px; box-sizing:border-box;box-sizing:-moz-border-box; -webkit-box-sizing:border-box; display:flex; align-items:center;">
+                <div id="lineSlider">
+                    <div id="lineSliderHandler" class="ui-slider-handle"></div>
+                </div>
+            </div>
+        </div>
+        <div class="input-group mb-2" style="display:flex; justify-content: center; align-items: center; ">
+            <button class="btn-green" id="updateNody">@Translate("update", "Update")</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/Nodification.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(() => {
+            var handler = $('#lineSliderHandler');
+            $('#lineSlider').slider({
+                min: 5,
+                max: 100,
+                step: 1,
+                value: @nodification.CallAfterLines,
+                create: function () {
+                    handler.text($(this).slider("value"));
+                },
+                slide: function (event, ui) {
+                    handler.text(ui.value);
+                }
+            });
+        });
+
+    </script>
+}

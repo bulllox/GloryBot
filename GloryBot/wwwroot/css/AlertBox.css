@@ -1,0 +1,20 @@
+﻿
+#AlertBox {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -15%);
+    width: 450px;
+    border: 1px solid var(--border-color);
+    z-index: 100000;
+    background-color: var(--groupBox-bg-color);
+}
+
+
+.nodyContent {
+    padding: 5px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    color: white;
+}

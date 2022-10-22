@@ -1,0 +1,314 @@
+﻿@import url('./root.css');
+@import url('./AlertBox.css');
+body {
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+
+#wrapper {
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color);
+}
+
+.menu {
+    position: relative;
+    min-width: 220px;
+    max-width: 220px;
+    width: 220px;
+    font-weight: bold;
+    background-color: var(--menu-bg-color);
+    border-right: 4px solid var(--border-color);
+}
+
+.dropdown-menu {
+    background-color: var(--groupBox-bg-color) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+.dropdown-item { color:white !important;}
+
+.dropdown-item:hover {
+    background-color: var(--btnHoverColor) !important;
+}
+
+.btn-menu {
+    width: 100% !important;
+    height: 45px !important;
+    background-color: var(--button-bg-color) !important;
+    color: var(--text-color) !important;
+    border: none !important;
+    cursor: pointer !important;
+    margin-bottom: 5px !important;
+}
+
+.content {
+    position: relative;
+    width: 1060px;
+    border-top: 4px solid var(--border-color);
+}
+
+.Logo {
+    width: 100%;
+    height: 150px;
+    margin-bottom: 15px;
+    background-image: url("../Icons/Logo.png");
+    background-size: 100% 100%;
+}
+
+.DragBar .Logo-Small {
+    width: 32px;
+    height: 32px;
+    background-image: url("../Icons/Logo.png");
+    background-size: 100% 100%;
+    float: left;
+    margin-right: 15px;
+
+}
+
+.DragBar .title {
+    height: 32px;
+    display: flex;
+    align-items: center;
+    color: var(--text-color);
+    float: left;
+}
+
+.DragBar .Buttons {
+    
+    float: right;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.content {
+    position: relative;
+    padding: 15px;
+}
+
+.DragBar {
+    width: 100%;
+    height: 28px;
+    -webkit-user-select: none;
+    -webkit-app-region: drag;
+    background-color: var(--menu-bg-color);
+    padding: 4px;
+}
+
+
+
+.Buttons button {
+    border: none;
+    height: 32px;
+    width: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    margin-right: 4px;
+    cursor: pointer;
+}
+
+#CloseButton {
+    background-color: red;
+}
+
+#CloseButton:hover {
+    background-color: rgb(150, 0, 0);
+}
+
+#MinButton:hover {
+    background-color: rgba(255, 255, 255, .2);
+}
+
+.titlebar-button {
+    -webkit-app-region: no-drag;
+}
+
+.groupBox {
+    width: 350px;
+    background-color: var(--groupBox-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+}
+
+.groupBoxTitle {
+    height: 30px;
+    width: 50%;
+    border-bottom: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    border-bottom-right-radius: 10px;
+    border-top-left-radius: 10px;
+    display: flex;
+    align-items: center;
+    padding-left: 4px;
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+    box-shadow: 2px 2px 5px black;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    background-color: var(--title-bgcolor);
+}
+
+.groupBoxContent {
+    color: var(--text-color);
+    padding: 20px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.groupBoxContent li {
+    list-style: none;
+    margin-bottom: 2px;
+}
+
+.groupBoxContent li:last-child {
+    margin-bottom: 0;
+}
+
+.topmenu {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.middleMenu {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    width: 80%;
+    transform: translate(-50%, -45%);
+}
+
+#streamCategory {
+    margin-left: 90px;
+}
+
+.StreamAgeLimit {
+    margin-top: 10px;
+}
+
+
+.middleMenu input {
+    width: 300px;
+}
+
+.middleMenu .Save button {
+    width: 120px;
+    height: 35px;
+    margin-top: 20px;
+    border: none;
+    font-weight: bold;
+    font-size: 16px;
+    background-color: var(--border-color);
+}
+
+.btnSettings {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    height: 45px;
+    font-size: 17px;
+    font-weight: bold;
+    border: none;
+    background-color: var(--button-green);
+}
+
+.btnSettings:hover {
+    cursor: pointer;
+    background-color: var(--button-green-hover);
+}
+
+.btn-green {
+    background-color: var(--button-green);
+    border: none;
+    cursor: pointer;
+}
+
+.btn-green:hover {
+    background-color: var(--button-green-hover);
+}
+
+.uris {
+    text-decoration: underline;
+}
+
+.uris:hover {
+    cursor: pointer;
+    color: var(--button-green);
+}
+
+
+.lastCategory {
+    margin-top: 5px;
+    float:left;
+    width:100%;
+}
+
+.lastCategory .lastCat {
+    float:left;
+    width:250px;
+    height: 35px;
+    border-radius: 5px;
+    background-color: var(--bg-color);
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.lastCategory .lastCat:hover {
+    background-color: var(--button-green-hover);
+    color:black;
+}
+
+.lastCategory .lastCat:last-child {
+    margin-right: 0px;
+}
+
+#nody {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -15%);
+    width: 450px;
+    border: 1px solid var(--border-color);
+    z-index: 100000;
+    background-color: var(--groupBox-bg-color);
+}
+
+.nodyTitle {
+    width: 70%;
+    border-bottom: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    border-bottom-right-radius: 10px;
+    background-color: var(--border-color);
+    height: 30px;
+    display: flex;
+    align-items: center;
+    padding-left: 5px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-shadow: 2px 2px 5px black;
+    font-weight: bold;
+    color:black;
+}
+
+.nodyContent {
+    padding: 5px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    color:white;
+}

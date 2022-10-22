@@ -1,0 +1,25 @@
+{
+  "version": "1.0",
+  "defaultProvider": "unpkg",
+  "libraries": [
+    {
+      "library": "@microsoft/signalr@latest",
+      "destination": "wwwroot/lib/microsoft/signalr/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "electron-updater@5.2.1",
+      "destination": "wwwroot/lib/electron-updater/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "electron-log@4.4.8",
+      "destination": "wwwroot/lib/electron-log/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "tinyColorPicker@1.1.1",
+      "destination": "wwwroot/lib/tinyColorPicker/"
+    }
+  ]
+}

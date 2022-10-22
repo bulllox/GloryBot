@@ -1,0 +1,92 @@
+[
+  {
+    "Name": "default",
+    "Controller": "Home",
+    "Action": "Index"
+  },
+  {
+    "Name": "chat",
+    "Controller": "Chat",
+    "Action": "Index"
+  },
+  {
+    "Name": "alerts",
+    "Controller": "Alerts",
+    "Action": "Index"
+  },
+  {
+    "Name": "webalert",
+    "Controller": "WebAlert",
+    "Action": "Index"
+  },
+  {
+    "Name": "commands",
+    "Controller": "Commands",
+    "Action": "Index"
+  },
+  {
+    "Name": "deletecommand",
+    "Controller": "Commands",
+    "Action": "Delete",
+    "Wildcards": [
+      "commandName?"
+    ]
+  },
+  {
+    "Name": "editcommand",
+    "Controller": "Commands",
+    "Action": "Edit",
+    "Wildcards": [
+      "commandName?"
+    ]
+  },
+  {
+    "Name": "nodifications",
+    "Controller": "Nodifications",
+    "Action": "Index"
+  },
+  {
+    "Name": "editNodifications",
+    "Controller": "Nodifications",
+    "Action": "Edit",
+    "Wildcards": [
+      "id?"
+    ]
+  },
+  {
+    "Name": "deleteNodifications",
+    "Controller": "Nodifications",
+    "Action": "Delete",
+    "Wildcards": [
+      "id?"
+    ]
+  },
+  {
+    "Name": "updater",
+    "Controller": "Update",
+    "Action": "Index"
+  },
+  {
+    "Name": "plugins",
+    "Controller": "Plugins",
+    "Action": "Index"
+  },
+  {
+    "Name": "subscriber",
+    "Controller": "Subscriber",
+    "Action": "Index"
+  },
+  {
+    "Name": "settings",
+    "Controller": "Settings",
+    "Action": "Index"
+  },
+  {
+    "Name": "changesettings",
+    "Controller": "Settings",
+    "Action": "ChangeLanguage",
+    "Wildcards": [
+      "lang?"
+    ]
+  }
+]

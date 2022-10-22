@@ -1,0 +1,72 @@
+@{
+    ViewData["Title"] = "Chat";
+    Layout = "_Layout";
+}
+@using GloryBot.Models
+<html>
+
+<head>
+
+    <link rel="stylesheet" href="~/css/chat.css" asp-append-version="true">
+    <style>
+        li {
+            list-style: none;
+            z-index: 1;
+        }
+
+        .avatar {
+            float: left;
+        }
+
+        .leftSpellInfo {
+            float: left;
+        }
+
+        .spellSender {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .spell {
+            background-color: #161616;
+            overflow: hidden;
+            width: 250px;
+            color: white;
+            padding: 4px;
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            border-radius: 5px;
+            box-shadow: 1px 1px 5px white;
+        }
+    </style>
+    <meta charset="UTF-8">
+</head>
+
+<body id="Chat">
+    <div id="ChatWindow" style="z-index: 0;">
+        <div id="chatModCommands">
+            
+        </div>
+        <div class="ChatBox">
+        </div>
+        <div class="ChatInputs" style="position: relative;">
+            <select id="sendAsUser" style="margin-right: 5px;">
+                <option>Bot</option>
+                <option>Streamer</option>
+            </select>
+            <div id="defaultCommands"></div>
+            <input type="text" id="chatInput">
+            <button class="btn-green" id="btnSendChat">@Translate("chat.send")</button>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
+@section Scripts {
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/chat.js" asp-append-version="true"></script>
+}

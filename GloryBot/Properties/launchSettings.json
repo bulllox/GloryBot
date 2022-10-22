@@ -1,0 +1,54 @@
+{
+  "profiles": {
+    "Electron.NET App": {
+      "commandName": "Executable",
+      "executablePath": "electronize",
+      "commandLineArgs": "start",
+      "workingDirectory": ".",
+      "nativeDebugging": false,
+      "jsWebView2Debugging": false
+    },
+    "Electron.NET App Watch": {
+      "commandName": "Executable",
+      "executablePath": "electronize",
+      "commandLineArgs": "start /watch",
+      "workingDirectory": "."
+    },
+    "Electron.NET App Build": {
+      "commandName": "Executable",
+      "executablePath": "electronize",
+      "commandLineArgs": "build /target win",
+      "workingDirectory": "."
+    },
+    "GloryBot Deploy": {
+      "commandName": "Executable",
+      "executablePath": "electronize",
+      "commandLineArgs": "build /target win /electron-params \"-p always\"",
+      "workingDirectory": "."
+    },
+    "GloryBot": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:7045;http://localhost:5123"
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  },
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:37927",
+      "sslPort": 44330
+    }
+  }
+}

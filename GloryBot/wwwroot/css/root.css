@@ -1,0 +1,20 @@
+:root {
+    --chatBackground: black;
+    --chatTextColor: white;
+    --bg-color: rgb(30, 30, 30);
+    --menu-bg-color: rgb(55, 55, 55);
+    --button-bg-color: rgb(70, 70, 70);
+    --text-color: white;
+    --border-color: rgb(155, 95, 0);
+    --groupBox-bg-color: rgb(55, 55, 55);
+    --button-green: rgb(155, 95, 0);
+    --button-green-hover: rgb(241, 171, 58);
+    --title-bgcolor: rgb(155, 95, 0);
+    --large-Input-Title: 20%;
+    --small-border-radius: 5px;
+    --btnSaveWidth: 120px;
+    --btnSaveHeight: 30px;
+    --btnHoverColor: rgb(155, 95, 0);
+
+    --shinyText: rgb(245, 186, 91);
+}

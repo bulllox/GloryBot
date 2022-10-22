@@ -1,0 +1,51 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<div class="topmenu" style="display:flex; justify-content: flex-start !important;">
+    <div class="groupBox">
+        <div class="groupBoxTitle">Update Info</div>
+        <div class="groupBoxContent">
+            <ul>
+                <li id="releaseName">Release Name: </li>
+                <li id="version">Version: </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="middleMenu">
+    <div class="progress" style="display:none; height: 27px;"></div>
+</div>
+
+
+<style>
+</style>
+
+@section Scripts {
+    <script>
+        $(document).ready(() => {
+            $('.progress').progressbar();
+            ipcRenderer.on("update-updater-data", (event, args) => {
+                console.log(args);
+                var jData = JSON.parse(args);
+                $('#version').text(`Version: ${jData.version}`);
+                $('#releaseName').text(`Release Name: ${jData.releaseName}`);
+            });
+
+            ipcRenderer.on("update-download", (event, args) => {
+                
+                var jData = JSON.parse(args);
+                var downloadProgress = parseInt(jData.downloadProgress);
+                $('.progress').css("background-color", "grey");
+                $('.progress > div').css("background-color", "blue");
+                $('.progress').css("display", "block");
+                
+                $('.progress').progressbar("value", downloadProgress);
+                console.log($('.progress').progressbar("value"));
+            });
+        });
+
+    </script>
+
+}
