@@ -26,7 +26,11 @@
 </head>
 
 <body>
+    <div class="alert alert-warning" role="alert">
+            Alert Url: http://localhost:5000/webalert
+        </div>
     <div class="topmenu">
+        
         <div class="groupBox">
             <button id="btnFollow" onclick="javascript:ChangeTab('alertFollow');" class="btn-green">Follow</button>
             <button id="btnSubs" onclick="javascript:ChangeTab('alertSub');" class="btn-green">Subscribe</button>
@@ -45,8 +49,8 @@
                     <div class="groupBoxContent" style="text-align:center;">
                         <div id="alertBox" style="text-align: center;">
                             <div id="alertfollowImagePreview"></div>
-                            <div id="alertfollowTextPreview"></div>
-                            <audio style="display:none; margin: 0 auto;" id="alertfollowAudioPreview" controls></audio>
+                            <div style="font-size: 16px !important;" id="alertfollowTextPreview"></div>
+                            <div style="width: 100%; display: flex; align-items:center; justify-content: center;"><audio id="alertfollowAudioPreview" controls></audio></div>
                         </div>
                     </div>
                 </div>
@@ -150,8 +154,9 @@
                     <div class="groupBoxContent" style="text-align:center;">
                         <div id="alertBox">
                             <div id="alertsubImagePreview"></div>
-                            <div id="alertsubTextPreview"></div>
-                            <audio style="display:none;" id="alertsubAudioPreview" controls></audio>
+                            <div style="font-size: 16px !important;" id="alertsubTextPreview"></div>
+                            <div style="width: 100%; display: flex; align-items:center; justify-content: center;">
+                                <audio style="display:none;" id="alertsubAudioPreview" controls></audio></div>
                         </div>
                     </div>
                 </div>
@@ -250,8 +255,10 @@
                     <div class="groupBoxContent" style="text-align:center;">
                         <div id="alertBox">
                             <div id="alertspellImagePreview"></div>
-                            <div id="alertspellTextPreview"></div>
-                            <audio style="display:none;" id="alertspellAudioPreview" controls></audio>
+                            <div style="font-size: 16px !important;" id="alertspellTextPreview"></div>
+                            <div style="width: 100%; display: flex; align-items:center; justify-content: center;">
+                                <audio style="display:none;" id="alertspellAudioPreview" controls></audio>
+                            </div>
                         </div>
                     </div>
                 </div>

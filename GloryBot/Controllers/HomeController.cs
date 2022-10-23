@@ -136,6 +136,7 @@ namespace GloryBot.Controllers
             if (HybridSupport.IsElectronActive)
             {
                 var autoUpdater = Electron.AutoUpdater;
+                
                 Log("Checking for Updates", LogTypes.System);
                 autoUpdater.OnUpdateAvailable += OnUpdateAvailable;
                 await autoUpdater.CheckForUpdatesAsync();
@@ -173,6 +174,10 @@ namespace GloryBot.Controllers
                     streamInfo = sInfo;
                     Log(JsonConvert.SerializeObject(sInfo, Formatting.Indented), LogTypes.StreamInfo);
                     var info = JsonConvert.SerializeObject(streamInfo, Formatting.Indented);
+                    if (DiscordInstance.DiscordState == true)
+                    {
+                        DiscordInstance.SetInfo(DashboardInstance.SettingsModel.DiscordLargeImage, DashboardInstance.SettingsModel.DiscordSmallImage, sInfo.channel_url);
+                    }
                     await _hub.Clients.All.UpdateStreamInfo(info);
                 }
                 else
@@ -197,12 +202,17 @@ namespace GloryBot.Controllers
             if (res.IsSuccessStatusCode)
             {
                 Console.WriteLine("Saved");
+                if (DiscordInstance.DiscordState == true)
+                {
+                    DiscordInstance.SetInfo(DashboardInstance.SettingsModel.DiscordLargeImage, DashboardInstance.SettingsModel.DiscordSmallImage, streamInfo.channel_url);
+                }
             }
             else
             {
                 var cont = await res.Content.ReadAsStringAsync();
                 Console.WriteLine(cont);
             }
+            
             return Redirect("/home/index");
         }
 

@@ -95,8 +95,8 @@ namespace GloryBot
                 Log("[Electron.Net]: creating Electron Window", LogTypes.System);
                 MainWindow = await Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
                 {
-                    Width = 1500,
-                    Height = 950,
+                    Width = 1540,
+                    Height = 990,
                     Show = false,
                     Icon = ConvertSlash($"{PublicFolder()}/wwwroot/Icons/logo_small.png"),
                     Frame = false,

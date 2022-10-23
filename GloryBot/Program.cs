@@ -33,14 +33,17 @@ namespace GloryBot
             {
                 RootPath = "/usr/share/GloryBot/";
             }
-            DbPath = ConvertSlash($"{RootPath}/Assets/Database/GloryBot.db");
-            if(Directory.Exists(Asset("logs")))
+            if (Directory.Exists(RootPath))
             {
-                foreach(var file in Directory.GetFiles(Asset("logs")))
+                DbPath = ConvertSlash($"{RootPath}/Assets/Database/GloryBot.db");
+                if (Directory.Exists(Asset("logs")))
                 {
-                    File.Delete(file);
+                    foreach (var file in Directory.GetFiles(Asset("logs")))
+                    {
+                        File.Delete(file);
+                    }
+                    Directory.Delete(Asset("logs"));
                 }
-                Directory.Delete(Asset("logs"));
             }
             try
             {

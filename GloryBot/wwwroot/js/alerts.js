@@ -15,12 +15,12 @@ function SetData(alert, text, soundfile, imagefile, duration, volume, animation)
     LoadImageUrlToInput(alert, imagefile, splittedImage[splittedImage.length - 1]);
     var img = document.createElement("img");
     img.src = imagefile;
-    img.width = 200;
-    img.height = 200;
+    img.width = 150;
+    img.height = 150;
     document.getElementById(`alert${alert}ImagePreview`).append(img);
 
     LoadSoundUrlToInput(alert, soundfile, splittedSound[splittedSound.length - 1]);
-    console.log(volume);
+    
     document.getElementById(`alert${alert}AudioPreview`).src = soundfile;
     document.getElementById(`alert${alert}AudioPreview`).style.display = "block";
     document.getElementById(`alert${alert}TextPreview`).innerHTML = text;

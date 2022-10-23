@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "Electron.NET App": {
+    "GloryBot Start": {
       "commandName": "Executable",
       "executablePath": "electronize",
       "commandLineArgs": "start",
@@ -8,13 +8,13 @@
       "nativeDebugging": false,
       "jsWebView2Debugging": false
     },
-    "Electron.NET App Watch": {
+    "GloryBot Watch": {
       "commandName": "Executable",
       "executablePath": "electronize",
       "commandLineArgs": "start /watch",
       "workingDirectory": "."
     },
-    "Electron.NET App Build": {
+    "GloryBot Build Win": {
       "commandName": "Executable",
       "executablePath": "electronize",
       "commandLineArgs": "build /target win",
@@ -26,15 +26,7 @@
       "commandLineArgs": "build /target win /electron-params \"-p always\"",
       "workingDirectory": "."
     },
-    "GloryBot": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "dotnetRunMessages": true,
-      "applicationUrl": "https://localhost:7045;http://localhost:5123"
-    },
+    
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,

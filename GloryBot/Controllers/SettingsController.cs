@@ -15,8 +15,7 @@ public class SettingsController : Controller
         TDGlobals.SetChatState(false);
         IsHomeActive = false;
 
-        Electron.IpcMain.RemoveAllListeners("settings-save-obs-setting");
-        Electron.IpcMain.RemoveAllListeners("settings-save-discord");
+
         /* Electron.IpcMain.On("settings-save-discord", (args) => {
              var jString = JsonConvert.SerializeObject(args, Formatting.Indented);
              var data = JsonConvert.DeserializeObject<Dictionary<string, string>>(jString);
@@ -36,7 +35,6 @@ public class SettingsController : Controller
 
         //Electron.IpcMain.On("botAuth", DoBotAuth);
         // Electron.IpcMain.On("StreamerAuth", DoStreamerAuth);
-        Electron.IpcMain.On("settings-save-obs-setting", SaveObsSettings);
         ViewData["Options"] = LangInstance.GetLanguage();
         return View();
     }
@@ -68,7 +66,7 @@ public class SettingsController : Controller
         ChangeTranslation(lang);
         return Redirect("/settings/index");
     }
-
+    /*
     private void SaveObsSettings(object obj)
     {
         Console.WriteLine("hallo Obs");
@@ -83,7 +81,7 @@ public class SettingsController : Controller
         }
         DashboardInstance.SettingsModel.Save();
     }
-
+    */
     [HttpPost]
     public IActionResult StreamerAuth()
     {
@@ -129,7 +127,10 @@ public class SettingsController : Controller
         if (result.ToBoolean() == true)
         {
             BotAuthorized = true;
-            OpenChat();
+            if (!string.IsNullOrEmpty(DashboardInstance.SettingsModel.Channel))
+            {
+                OpenChat();
+            }
         }
         else
         {

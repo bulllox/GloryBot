@@ -109,7 +109,7 @@ $(document).ready(() => {
         $('#defaultCommands').empty();
         if ($(`#${target.id}`).val().includes("/") && $(`#${target.id}`).val().length > 0 && $(`#${target.id}`).val().length < 2) {
             var ul = document.createElement("ul");
-
+            commandList.sort();
             commandList.forEach((element) => {
                 var li = document.createElement("li");
                 li.id = `command_${commandCounter}`;
